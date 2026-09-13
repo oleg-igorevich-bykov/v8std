@@ -402,6 +402,9 @@ description = "Мы используем файлы cookie для распозн
 "Разработка планов обмена с отборами" = "std/701.md"
 
 [[project.nav."Стандарты"."Стандарты разработки"."Реализация обмена данными"]]
+"Разработка правил регистраций" = "std/799.md"
+
+[[project.nav."Стандарты"."Стандарты разработки"."Реализация обмена данными"]]
 "Интеграция прикладных решений через формат EnterpriseData" = "std/771.md"
 
 [[project.nav."Стандарты"."Стандарты разработки"]]
@@ -920,6 +923,8 @@ color = "#FFFFFF"
 logo = "docs/assets/images/logo-social.png"
 
 [project.markdown_extensions.admonition]
+
+[project.markdown_extensions."scripts.v8std_markdown"]
 
 [project.markdown_extensions.abbr]
 

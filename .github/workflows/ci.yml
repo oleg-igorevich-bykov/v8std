@@ -30,39 +30,56 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+<<<<<<< HEAD
+      - name: Checkout
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          fetch-depth: 2
+      - name: Validate architecture graph
+        run: |
+          python3 -m pip install --disable-pip-version-check PyYAML
+          python3 scripts/v8std_architecture.py validate --root . --base-ref HEAD^ --merge-ready
+>>>>>>> upstream/main
       - name: Build docs image
         run: |
           docker build -f docker-compose/docker/Dockerfile -t v8std-docs .
       - name: Build
         run: |
+          # Keep generated artifacts owned by the checkout user for later gates.
           docker run --rm \
+            --user "$(id -u):$(id -g)" \
             -v "$PWD:/docs" \
             -w /docs \
             v8std-docs build --strict
       - name: Test MCP retrieval
         run: |
+          # Git-backed tests must run as the owner of the mounted checkout.
           docker run --rm \
+            --user "$(id -u):$(id -g)" \
             -v "$PWD:/docs" \
             -w /docs \
             --entrypoint python \
             v8std-docs -m unittest discover -v
           docker run --rm \
+            --user "$(id -u):$(id -g)" \
             -v "$PWD:/docs" \
             -w /docs \
             --entrypoint python \
             v8std-docs scripts/acc_diagnostics.py generate --check
           docker run --rm \
+            --user "$(id -u):$(id -g)" \
             -v "$PWD:/docs" \
             -w /docs \
             --entrypoint python \
             v8std-docs scripts/generate_diagnostic_standard_links.py --check
           docker run --rm \
+            --user "$(id -u):$(id -g)" \
             -v "$PWD:/docs" \
             -w /docs \
             --entrypoint python \
             v8std-docs scripts/check_diagnostic_articles.py
           docker run --rm \
+            --user "$(id -u):$(id -g)" \
             -v "$PWD:/docs" \
             -w /docs \
             --entrypoint python \
